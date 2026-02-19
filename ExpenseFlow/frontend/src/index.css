@@ -1,0 +1,289 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Color tokens for theming and readability */
+  --text-main: whitesmoke;              /* main text color (soft off-white) */
+  --text-muted: rgba(255,255,255,0.78); /* secondary/muted text (softer) */
+  --accent: dodgerblue;                /* action / primary color */
+  --card-bg: rgba(12,14,16,0.62);    /* card and panel background (subtle dark) */
+  --card-border: rgba(255,255,255,0.04); /* more subtle border */
+  --control-bg: rgba(10,12,14,0.50); /* forms / inputs (slightly stronger) */
+  --control-border: rgba(255,255,255,0.05);
+  --table-head-bg: rgba(12,14,16,0.65);
+}
+
+body {
+  font-family:'sans-serif', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Full-page background image (place your image at public/images/background.jpg) */
+  background-image: url('/images/background.jpg');
+  background-color: black; /* fallback color if image is missing */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text-main); /* use themed text color */
+}
+
+.App {
+  min-height: 100vh;
+  /* make sure main app content appears above the overlay */
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content wrapper with padding bottom to prevent footer overlap */
+.App > div {
+  padding-bottom: 19rem;
+}
+
+/* Footer styles */
+.footer {
+  margin-top: auto;
+}
+
+.footer a {
+  color: var(--accent);
+  transition: opacity 0.2s ease;
+}
+
+.footer a:hover {
+  opacity: 0.8;
+}
+
+/* Subtle dark overlay to keep text readable on bright/detailed backgrounds */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none; /* allow clicks through the overlay */
+  z-index: 0; /* sits above background image but below .App (z-index:1) */
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Card styles */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* use darker translucent background for contrast */
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  backdrop-filter: blur(6px);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Button styles */
+.btn {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+/* Make primary buttons translucent but visible */
+.btn {
+  color: var(--text-main);
+}
+
+/* primary action button - use accent color */
+.btn-primary {
+  background: var(--accent);
+  border-color: rgba(46,163,255,0.9);
+  color: white; /* white text on accent for clear contrast */
+}
+
+/* ghost / light buttons */
+.btn-outline-primary {
+  background: transparent;
+  border-color: rgba(255,255,255,0.08);
+  color: var(--text-main);
+}
+
+/* Form controls translucent */
+.form-control, .form-select {
+  background: var(--control-bg);
+  border: 1px solid var(--control-border);
+  color: var(--text-main);
+  backdrop-filter: blur(4px);
+}
+
+/* Placeholder color more muted */
+.form-control::placeholder {
+  color: rgba(255,255,255,0.60);
+}
+
+/* Input focus state */
+.form-control:focus, .form-select:focus {
+  border-color: rgba(46,163,255,0.95);
+  box-shadow: 0 0 0 0.15rem rgba(46,163,255,0.12);
+  background: var(--control-bg); /* keep translucent background on focus */
+  color: var(--text-main);
+  outline: none;
+}
+
+/* Ensure active / focused inputs keep the translucent style (including keyboard focus) */
+.form-control:active,
+.form-control:focus-visible,
+.form-select:active,
+.form-select:focus-visible {
+  background: var(--control-bg);
+  color: var(--text-main);
+  outline: none;
+}
+
+/* Autofill (Chrome) - keep background and text color when browser autofills fields */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px rgba(10,12,14,0.50) inset !important; /* matches --control-bg */
+  -webkit-text-fill-color: var(--text-main) !important;
+}
+
+/* Select dropdown options */
+.form-select option {
+  background: rgba(12,14,16,0.95);
+  color: var(--text-main);
+}
+
+/* Remove scroll arrows from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
+}
+
+/* Tables with translucent rows */
+.table {
+  color: var(--text-main);
+  background: transparent;
+}
+
+.table thead th {
+  background: var(--table-head-bg);
+  color: var(--text-main);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.table tbody tr {
+  background: var(--card-bg);
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+}
+
+/* Recent activity and income tables */
+.table-hover tbody tr:hover {
+  background: rgba(46,163,255,0.08);
+  color: var(--text-main);
+}
+
+/* Table borders and cells */
+.table td, 
+.table th {
+  border-color: rgba(255,255,255,0.04);
+  padding: 0.75rem 1rem;
+  background: var(--card-bg);
+  color: var(--text-main);
+}
+
+/* Table columns and headers */
+.table th {
+  background: rgba(0,0,0,0.45) !important;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Override any Bootstrap table stripes */
+.table-striped tbody tr:nth-of-type(odd),
+.table-striped tbody tr:nth-of-type(even) {
+  background: var(--card-bg);
+}
+
+/* Table row borders */
+.table thead th {
+  border-bottom: 2px solid rgba(255,255,255,0.06);
+}
+
+.table tbody td {
+  border-top: 1px solid rgba(255,255,255,0.03);
+}
+
+/* Table inside cards - ensure proper contrast */
+.card .table {
+  margin-bottom: 0;
+}
+
+.card .table tbody tr {
+  background: rgba(12,14,16,0.45);
+}
+
+.card .table tbody tr:hover {
+  background: rgba(46,163,255,0.08);
+}
+
+/* Navbar / header translucent */
+.navbar, .navbar-expand-lg, .navbar-light, .navbar-dark {
+  background: rgba(0,0,0,0.35) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(6px);
+  color: var(--text-main);
+}
+
+/* Modal and dropdown translucent */
+.modal-content, .dropdown-menu {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  backdrop-filter: blur(6px);
+}
+
+/* Links and small text */
+a, .link {
+  color: var(--accent);
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Chart containers */
+canvas {
+  max-height: 400px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  h1.display-3 {
+    font-size: 2.5rem;
+  }
+
+  h1.display-4 {
+    font-size: 2rem;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+}
